@@ -1,0 +1,98 @@
+- id: '1793316572831'
+  alias: n8n Offline Alert
+  description: Alert when n8n is offline for 2 minutes
+  triggers:
+  - trigger: state
+    entity_id: binary_sensor.n8n_health
+    to: 'off'
+    for:
+      minutes: 2
+  actions:
+  - action: persistent_notification.create
+    data:
+      title: n8n Server Offline
+      message: n8n has been unreachable for 2 minutes.
+  mode: single
+- id: '1793430307913'
+  alias: Mirabella Lamp - Smart Location and Sunset
+  description: 'Turn off when more than 100m away. Turn on within 100m after sunset
+    and before 11:30 PM. Turn off at 11:30 PM.
+
+    '
+  triggers:
+  - trigger: state
+    entity_id: person.shubham_singh
+  - trigger: time_pattern
+    minutes: /1
+  - trigger: sun
+    event: sunset
+  - trigger: time
+    at: '23:30:00'
+    id: bedtime
+  - trigger: homeassistant
+    event: start
+  actions:
+  - variables:
+      distance_m: "{% set d = distance(\n  'person.shubham_singh', 'zone.home'\n)
+        %} {{ d * 1000 if d is not none else -1 }}\n"
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: bedtime
+      sequence:
+      - action: light.turn_off
+        target:
+          entity_id: light.genio_smart_wifi_bulb_a60_rgb_cct
+    - conditions:
+      - condition: template
+        value_template: '{{ now().hour == 23 and now().minute >= 45 }}
+
+          '
+      sequence:
+      - action: light.turn_off
+        target:
+          entity_id: light.genio_smart_wifi_bulb_a60_rgb_cct
+    - conditions:
+      - condition: template
+        value_template: '{{ distance_m | float(-1) > 100 }}
+
+          '
+      - condition: state
+        entity_id: light.genio_smart_wifi_bulb_a60_rgb_cct
+        state: 'on'
+      sequence:
+      - action: light.turn_off
+        target:
+          entity_id: light.genio_smart_wifi_bulb_a60_rgb_cct
+    - conditions:
+      - condition: template
+        value_template: "{{ distance_m | float(-1) >= 0\n   and distance_m | float(-1)
+          <= 100 }}\n"
+      - condition: sun
+        after: sunset
+      - condition: template
+        value_template: "{{ now().strftime('%H:%M') >= '12:00'\n   and now().strftime('%H:%M')
+          < '23:30' }}\n"
+      - condition: state
+        entity_id: light.genio_smart_wifi_bulb_a60_rgb_cct
+        state: 'off'
+      sequence:
+      - action: light.turn_on
+        target:
+          entity_id: light.genio_smart_wifi_bulb_a60_rgb_cct
+  mode: restart
+- id: '1793442274862'
+  alias: Auto Reload Tapo Camera Every 2 Minutes
+  description: 'Reload the TP-Link Smart Home integration every 2 minutes to recover
+    camera controls.
+
+    '
+  triggers:
+  - trigger: time_pattern
+    minutes: /2
+  conditions: []
+  actions:
+  - action: homeassistant.reload_config_entry
+    data:
+      entity_id: button.loung_room_pan_left
+  mode: single

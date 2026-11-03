@@ -1,0 +1,63 @@
+
+# ==========================================
+# Environment variables and secrets
+# ==========================================
+.env
+.env.*
+!.env.example
+**/secrets.yaml
+**/secrets.yml
+*.pem
+*.key
+
+# ==========================================
+# Home Assistant database
+# ==========================================
+config/home-assistant_v2.db
+config/home-assistant_v2.db-shm
+config/home-assistant_v2.db-wal
+config/*.db
+config/*.db-shm
+config/*.db-wal
+
+# ==========================================
+# Home Assistant logs
+# ==========================================
+config/*.log
+config/*.log.*
+*.log
+
+# ==========================================
+# Home Assistant internal storage
+# ==========================================
+config/.storage/
+config/.cloud/
+config/.cloudflared/
+config/.cache/
+config/tts/
+
+# ==========================================
+# Temporary and generated files
+# ==========================================
+config/deps/
+config/__pycache__/
+**/__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+
+# ==========================================
+# Backups
+# ==========================================
+*.tar
+*.tar.gz
+*.zip
+config/backups/
+
+# ==========================================
+# Local editor files
+# ==========================================
+.vscode/
+.idea/
+*.swp
+*.swo

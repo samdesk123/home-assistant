@@ -1,0 +1,36 @@
+
+# Loads default set of integrations. Do not remove.
+default_config:
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 172.20.0.3
+
+logger:
+  default: warning
+  logs:
+    homeassistant.components.apple_tv: debug
+    pyatv: debug
+
+command_line:
+  - binary_sensor:
+      name: n8n Health
+      unique_id: n8n_health
+      device_class: connectivity
+      command: >-
+        curl --silent --show-error --fail
+        --max-time 10
+        https://n8n.tanshu.bid/healthz
+        > /dev/null && echo ON || echo OFF
+      payload_on: "ON"
+      payload_off: "OFF"
+      scan_interval: 60
