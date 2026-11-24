@@ -107,7 +107,7 @@ from pytapo.version import PYTAPO_VERSION
 
 from datetime import timedelta
 
-from .utils import getRecording
+from .utils import getColdFiles, getRecording
 
 
 async def async_setup(hass: HomeAssistant, config: dict):
@@ -515,6 +515,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             "button",
             "camera",
             "light",
+            "media_player",
             "number",
             "select",
             "siren",
@@ -1186,6 +1187,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
                     "switch",
                     "button",
                     "light",
+                    "media_player",
                     "number",
                     "select",
                     "siren",
@@ -1282,6 +1284,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
                         tapoController.getRecordingsList
                     )
                     LOGGER.debug("getRecordingsList -2")
+                    coldFiles = await getColdFiles(hass, entry.entry_id)
 
                     ts = datetime.datetime.utcnow().timestamp()
                     for searchResult in recordingsList:
@@ -1330,6 +1333,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
                                                     ENABLE_MEDIA_SYNC
                                                 ]
                                                 if enableMediaSync:
+                                                    # Recordings already in cold storage return without
+                                                    # awaiting anything; yield so a day with many of them
+                                                    # does not hold the event loop.
+                                                    await asyncio.sleep(0)
                                                     LOGGER.debug("getRecording -1")
                                                     await getRecording(
                                                         hass,
@@ -1345,6 +1352,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
                                                         ],
                                                         recordingCount,
                                                         totalRecordingsToDownload,
+                                                        coldFiles=coldFiles,
                                                     )
                                                     LOGGER.debug("getRecording -2")
                                                     device["lastMediaSyncActivity"] = (

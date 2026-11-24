@@ -34,3 +34,15 @@ command_line:
       payload_on: "ON"
       payload_off: "OFF"
       scan_interval: 60
+
+
+template:
+  - sensor:
+      - name: "Connected Network Devices"
+        unique_id: connected_network_devices_count
+        icon: mdi:devices
+        state: >
+          {{ integration_entities('eero')
+             | select('match', '^device_tracker\.')
+             | select('is_state', 'home')
+             | list | count }}

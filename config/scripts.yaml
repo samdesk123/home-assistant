@@ -1,0 +1,84 @@
+daikin_ac_power_on:
+  alias: Daikin AC - Power On
+  sequence:
+  - action: remote.send_command
+    target:
+      entity_id: remote.lrur
+    data:
+      device: daikin_ac
+      command: power_on
+      delay_secs: 0.4
+      num_repeats: 2
+  mode: single
+daikin_ac_power_off:
+  alias: Daikin AC - Power Off
+  sequence:
+  - action: remote.send_command
+    target:
+      entity_id: remote.lrur
+    data:
+      device: daikin_ac
+      command: power_off
+      delay_secs: 0.4
+      num_repeats: 2
+  mode: single
+daikin_ac_temp_up:
+  alias: Daikin AC - Temp Up
+  sequence:
+  - action: remote.send_command
+    target:
+      entity_id: remote.lrur
+    data:
+      device: daikin_ac
+      command: temp_up
+  mode: single
+daikin_ac_temp_down:
+  alias: Daikin AC - Temp down
+  sequence:
+  - action: remote.send_command
+    target:
+      entity_id: remote.lrur
+    data:
+      device: daikin_ac
+      command: temp_down
+  mode: single
+daikin_ac_swing_right:
+  alias: Daikin AC - Swing-right
+  sequence:
+  - action: remote.send_command
+    target:
+      entity_id: remote.lrur
+    data:
+      device: daikin_ac
+      command: swing
+  mode: single
+daikin_ac_swing_up:
+  alias: Daikin AC - Swing up
+  sequence:
+  - action: remote.send_command
+    target:
+      entity_id: remote.lrur
+    data:
+      device: daikin_ac
+      command: swing_up
+  mode: single
+daikin_ac_mode:
+  alias: Daikin AC - Mode
+  sequence:
+  - action: remote.send_command
+    target:
+      entity_id: remote.lrur
+    data:
+      device: daikin_ac
+      command: mode
+  mode: single
+daikin_ac_fan:
+  alias: Daikin AC - Fan
+  sequence:
+  - action: remote.send_command
+    target:
+      entity_id: remote.lrur
+    data:
+      device: daikin_ac
+      command: fan_speed
+  mode: single

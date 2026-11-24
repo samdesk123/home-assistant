@@ -26,13 +26,16 @@
         "data": {
           "enable_motion_sensor": "Habilitar sensor de movimento",
           "enable_time_sync": "Sincronizar Hora Automaticamente",
-          "enable_stream": "Usar stream do Home Assistant (requer reinicialização)",
           "enable_sound_detection": "Ativar detecção de limite de som (requer reinicialização)",
           "sound_detection_peak": "[Detecção de som] Pico em dB. 0 é muito alto e -100 é baixo.",
           "sound_detection_duration": "[Detecção de som] Quanto tempo o ruído precisa estar acima do pico para acionar o estado.",
-          "sound_detection_reset": "[Detecção de som] O tempo para redefinir o estado depois que nenhum novo ruído ultrapassar o pico."
+          "sound_detection_reset": "[Detecção de som] O tempo para redefinir o estado depois que nenhum novo ruído ultrapassar o pico.",
+          "native_webrtc": "WebRTC nativo e áudio bidirecional (experimental)"
         },
-        "description": "Quase lá!\nSó mais algumas opções..."
+        "description": "Quase lá!\nSó mais algumas opções...",
+        "data_description": {
+          "native_webrtc": "Usa o player da integração e permite falar nas câmeras compatíveis. Pode aumentar o uso da CPU."
+        }
       }
     },
     "error": {
@@ -65,18 +68,19 @@
           "username": "Nome de Usuário",
           "password": "Senha",
           "enable_motion_sensor": "Habilitar sensor de movimento",
-          "enable_stream": "Usar stream do Home Assistant (requer reinicialização)",
           "show_on_map": "Mostrar câmera no mapa",
           "enable_sound_detection": "Ativar detecção de limite de som (requer reinicialização)",
           "cloud_password": "Senha cloud (Opcional)",
           "sound_detection_peak": "[Detecção de som] Pico em dB. 0 é muito alto e -100 é baixo.",
           "sound_detection_duration": "[Detecção de som] Quanto tempo o ruído precisa estar acima do pico para acionar o estado.",
           "sound_detection_reset": "[Detecção de som] O tempo para redefinir o estado depois que nenhum novo ruído ultrapassar o pico.",
-          "direct_stream_arguments": "Parâmetros FFmpeg dos fluxos diretos"
+          "direct_stream_arguments": "Parâmetros FFmpeg dos fluxos diretos",
+          "native_webrtc": "WebRTC nativo e áudio bidirecional (experimental)"
         },
-        "description": "Modificar configurações da sua Tapo câmera.\n\nUsar stream do Home Assistant:\nSim - Maior delay de reprodução, menor uso de CPU, permite controle de reprodução\nNão - delay de reprodução muito curto, maior uso de CPU, sem controle de reprodução",
+        "description": "Modificar configurações da sua Tapo câmera.",
         "data_description": {
-          "direct_stream_arguments": "Opções avançadas para fluxos diretos e imagens. Um mapeamento vazio restaura os valores padrão. -vsync: null omite este parâmetro. Suportados: -loglevel, -probesize, -analyzeduration, -frames:v, -map-video, -vsync, -c:v, -f. Aplica-se a novos fluxos; recarregue a integração para parar os existentes. As imagens nativas da câmera não são afetadas."
+          "direct_stream_arguments": "Opções avançadas para fluxos diretos e imagens. Um mapeamento vazio restaura os valores padrão. -vsync: null omite este parâmetro. Suportados: -loglevel, -probesize, -analyzeduration, -frames:v, -map-video, -vsync, -c:v, -f. Aplica-se a novos fluxos; recarregue a integração para parar os existentes. As imagens nativas da câmera não são afetadas.",
+          "native_webrtc": "Usa o player da integração e permite falar nas câmeras compatíveis. Pode aumentar o uso da CPU."
         }
       },
       "media": {
@@ -109,6 +113,14 @@
     "light": {
       "nightlight": {
         "name": "Luz noturna"
+      }
+    },
+    "media_player": {
+      "music_player": {
+        "name": "Reprodutor de música"
+      },
+      "speaker": {
+        "name": "Alto-falante"
       }
     }
   }
